@@ -10,14 +10,22 @@ import Foundation
 class NewsListViewModel: ObservableObject {
     @Published var state: State = .idle
     @Published var newsResponse: NewsResponse?
-    
+    @Published var selectionCountries: String? = nil {
+        didSet {
+            fetchNews()
+        }
+    }
+    @Published var selectionCategory: String? = nil {
+        didSet {
+            fetchNews()
+        }
+    }// not yet implemented
     func fetchNews() {
         // call api
         state = .loading
-        
         //https://newsapi.org/v2/top-headlines?country=us&apiKey=b7d3753b32154e79a4c418efd2991763
         
-        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=b7d3753b32154e79a4c418efd2991763")! // note, https, not http
+        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(selectionCountries ?? "us")&apiKey=b7d3753b32154e79a4c418efd2991763")! // note, https, not http
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             DispatchQueue.main.async {

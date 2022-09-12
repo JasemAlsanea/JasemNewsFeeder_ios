@@ -8,10 +8,6 @@
 import Foundation
 
 class FilterViewModel: ObservableObject {
-    var countries = ["Algeria", "Kuwait", "Mexico"]
-    var categories = ["Business", "Enterainements"]
-    
-    @Published var selectionCountries: String? = nil
-    @Published var selectionCategory: String? = nil
-    
+    @Published var countries = ["de", "us"]
+    @Published var categories = ["business", "entertainment", "sports"]
 }

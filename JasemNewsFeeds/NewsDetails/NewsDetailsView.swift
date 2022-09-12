@@ -11,25 +11,22 @@ struct NewsDetailsView: View {
     @StateObject var viewModel: NewsDetailsViewModel
     
     var body: some View {
-        VStack {
+        List {
             AsyncImage(url: viewModel.imgSource)
-//                .resizable()
                 .scaledToFit()
                 .frame(height:170)
                 .cornerRadius(4)
+
+            Text("\(viewModel.title)")
+                .lineLimit(2)
             
-            VStack {
-                Text("\(viewModel.title)")
-                    .lineLimit(2)
-                
-                HStack {
-                    Text("\(viewModel.publishedAt)")
-                    Spacer()
-                    Text("\(viewModel.author ?? "")")
-                }
+            Text("\(viewModel.publishedAt)")
+            Spacer()
+            Text("\(viewModel.author ?? "")")
+            
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-            }
+            
             Text("\(viewModel.description ?? "")")
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.leading)

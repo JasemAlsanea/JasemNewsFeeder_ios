@@ -20,10 +20,10 @@ struct NewsListView: View {
                 }
         case .loading:
             ProgressView()
-        
+            
         case .loaded:
             if let articles = viewModel.newsResponse?.articles {
-                ScrollView {
+                List {
                     ForEach(articles, id: \.title) { article in
                         NavigationLink {
                             NewsDetailsView(
@@ -36,19 +36,25 @@ struct NewsListView: View {
                                     navigationTitle: article.title))
                         } label: {
                             HStack {
-                                AsyncImage(
-                                    url: article.urlToImage,
-                                    content: { result in
-                                        result
-                                            .image?.resizable()
-                                            .frame(width: 50.0, height: 50.0)
-                                    })
+                                AsyncImage(url: article.urlToImage)
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(4)
                                 
                                 Text(article.title)
                                     .foregroundColor(.black)
                             }
                         }
-
+                        
+                    }
+                }
+                .toolbar {
+                    NavigationLink {
+                        FilterView(viewModel: FilterViewModel(),
+                                   selectionCountries: $viewModel.selectionCountries,
+                                   selectionCategory: $viewModel.selectionCategory)
+                    } label: {
+                        Text("filter")
                     }
                 }
             }
